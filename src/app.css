@@ -1,0 +1,63 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+  --bg: #f3f4f9; --panel: #ffffff; --panel2: #eff1f7; --line: #e2e5ee;
+  --ink: #141826; --muted: #5f6880;
+  --brand: #4f4fe0; --solid: #5252e8; --bubble: #ffffff;
+  --ok: #15803d; --warn: #b45309; --bad: #dc2626;
+}
+.dark {
+  color-scheme: dark;
+  --bg: #0b0d15; --panel: #131724; --panel2: #1a1f30; --line: #272d42;
+  --ink: #eceff8; --muted: #959fbc;
+  --brand: #9a9aff; --solid: #5555e6; --bubble: #1c2234;
+  --ok: #4ade80; --warn: #fbbf24; --bad: #f87171;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-panel2: var(--panel2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-solid: var(--solid);
+  --color-bubble: var(--bubble);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@layer base {
+  html, body, #app { height: 100%; }
+  body { @apply bg-bg font-sans text-ink antialiased; }
+  * { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+}
+
+@layer components {
+  .input {
+    @apply w-full rounded-xl border border-line bg-panel2 px-3.5 py-2.5 text-sm outline-none transition
+      placeholder:text-muted focus:border-brand focus:ring-2 focus:ring-brand/25;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-3.5 py-2 text-sm font-medium transition
+      active:scale-[.98] disabled:pointer-events-none disabled:opacity-50;
+  }
+  .btn-primary { @apply bg-solid text-white hover:brightness-110; }
+  .btn-ghost { @apply border border-line bg-panel hover:bg-panel2; }
+  .icon-btn {
+    @apply grid size-9 shrink-0 place-items-center rounded-xl text-muted transition hover:bg-panel2 hover:text-ink;
+  }
+  .chip { @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium; }
+  .msg-in { animation: pop 0.18s ease-out; }
+}
+
+@keyframes pop {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
